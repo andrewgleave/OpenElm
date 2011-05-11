@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Sign in to the Open Elm Project{% endblock %}
+{% block extra_head %}
+<meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_5 alpha omega">
+        <h1>Sign In</h1>
+        <form class="grid_5 generic_form rounded_12" method="post" action="{% url accounts_login %}">
+            <fieldset class="generic">
+                {% if form.errors %}
+                <div class="field grid_4">
+                    <ul class="errorlist">
+                        <li>Please enter your username and password. Both fields are&nbsp;case-sensitive.</li>
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="field grid_4">
+                    {{ form.username.label_tag }}{{ form.username }}{{ form.username.errors }}
+                </div>
+                <div class="field grid_4">
+                    {{ form.password.label_tag }}{{ form.password }}{{ form.password.errors }}
+                </div>
+                <div class="field grid_4">
+                    <a class="back_nav cancel mock_button" href="javascript:void(0);">Cancel</a>
+                    <input class="submit" type="submit" value="Login">
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% csrf_token %}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock main_content %}

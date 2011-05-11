@@ -1,0 +1,7 @@
+{% autoescape off %}A new record has been added to the site.
+
+You can view and edit the record here:
+
+ http://www.openelm.org.im{% url accounts_login %}?next={% url management_record_detail record_id=record_id %}
+
+{% endautoescape %}

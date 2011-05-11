@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Sign in to the Open Elm Project{% endblock %}
+{% block extra_head %}
+<meta name="robots" content="noindex, nofollow">
+{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_5 alpha omega">
+        <h1>You have been logged out</h1>
+        <p>You can <a href="{% url accounts_login %}">sign in again here</a></p>
+    </div>
+</div>
+{% endblock main_content %}

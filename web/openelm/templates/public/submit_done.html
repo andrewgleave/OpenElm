@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Thanks for Submitting your Report {{ block.super }}{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_8 alpha">
+        <h1>Thank you for your report!</h1>
+        <p>Your report has been submitted and will be reviewed by the team.</p>
+        <h4>Spread the Word!</h4>
+        <p>Send a tweet or like us on Facebook to help us spread the word!</p>
+        <p><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.openelm.org.im/" data-text="I just spotted an Elm!" data-count="vertical" data-via="openelmproject">Tweet</a></p>
+        <p class="nmb"><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.openelm.org.im%2F&amp;layout=standard&amp;show_faces=true&amp;width=250&amp;action=like&amp;font=lucida+grande&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:80px;" allowTransparency="true"></iframe></p>
+    </div>
+    <div class="grid_4 omega">
+        {% include 'public/parts/contributors.html' %}
+        <h4>Did You Know?</h4>
+        <p class="fact">Elm wood has great strength, durability, a tight-twisted grain and is resistant to water. Its uses include: boat building (keels, rudders and trawler boards), furniture, floorboards and in decorative turning.</p>
+    </div>
+</div>
+{% endblock main_content %}

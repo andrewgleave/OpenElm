@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}How to Identify an Elm Tree {{ block.super }}{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_8 alpha">
+        <h1>How to Identify an Elm</h1>
+        <p>Elm trees are a relatively common tree and easy to identify, once you know what to look for.</p>
+        <ul class="leaf_markers sm_t">
+            <li>Elms have oval-shaped leaves with a <strong class="hl_g">saw-toothed edge</strong> that alternates in two rows pointing away from the shoot</li>
+            <li>One side of the leaf joins the stalk <strong class="hl_g">higher than the other</strong></li>
+            <li>The seeds are surrounded by round papery discs with the single seed in the centre</li>
+            <li>Their winter shoots are generally dark grey/purple with slightly darker purple/brown buds</li>
+            <li>The bark is quite <strong class="hl_g">coarse and rough</strong> and can have an intersecting, diagonal pattern</li>
+        </ul>
+        <div class="clearfix">
+            <a class="grid_2 fancy alpha" href="{{ VERSIONED_MEDIA_URL }}images/examples/leaf_fruit_l.jpg"><img src="{{ VERSIONED_MEDIA_URL }}images/examples/leaf_fruit.jpg"></a>
+            <a class="grid_2 fancy" href="{{ VERSIONED_MEDIA_URL }}images/examples/branches_l.jpg"><img src="{{ VERSIONED_MEDIA_URL }}images/examples/branches.jpg"></a>
+            <a class="grid_2 fancy" href="{{ VERSIONED_MEDIA_URL }}images/examples/leaf_l.jpg"><img src="{{ VERSIONED_MEDIA_URL }}images/examples/leaf.jpg"></a>
+            <a class="grid_2 fancy omega" href="{{ VERSIONED_MEDIA_URL }}images/examples/trunk_l.jpg"><img src="{{ VERSIONED_MEDIA_URL }}images/examples/trunk.jpg"></a>
+        </div>
+        <h4>Identifying Diseased Trees</h4>
+        <p>An infected elm tree usually exhibits symptoms soon after infection.</p>
+        <p>Because of the speed with which the disease attacks, detecting these symptoms as early as possible is essential for treatment. The main symptoms to look for are:</p>
+        <ul class="leaf_markers sm_t strong hl_o">
+            <li>Wilting of leaves and young shoots</li>
+            <li>Premature yellowing or discolouration of leaves</li>
+            <li>Retention of dead leaves</li>
+            <li>Rapid development of symptoms</li>
+        </ul>
+        <div class="clearfix">
+            <a class="grid_2 fancy alpha" href="{{ VERSIONED_MEDIA_URL }}images/examples/yellow_leaves_l.jpg"><img src="{{ VERSIONED_MEDIA_URL }}images/examples/yellow_leaves.jpg"></a>
+            <a class="grid_2 fancy" href="{{ VERSIONED_MEDIA_URL }}images/examples/wilted_leaves_l.jpg"><img src="{{ VERSIONED_MEDIA_URL }}images/examples/wilted_leaves.jpg"></a>
+            <a class="grid_2 fancy" href="{{ VERSIONED_MEDIA_URL }}images/examples/sapwood_l.jpg"><img src="{{ VERSIONED_MEDIA_URL }}images/examples/sapwood.jpg"></a>
+            <a class="grid_2 fancy omega" href="{{ VERSIONED_MEDIA_URL }}images/examples/retention_l.jpg"><img src="{{ VERSIONED_MEDIA_URL }}images/examples/retention.jpg"></a>
+        </div>
+        <h4>Controlling the Disease</h4>
+        <p>Prevention and control of Dutch Elm Disease can be achieved by:</p>
+        <ul class="leaf_markers sm_t">
+            <li>Surveillance and public awareness</li>
+            <li>Rapid reporting</li>
+            <li>Sanitation, felling and destruction of infected timber</li>
+            <li>Restricting the movement and burning of elm</li>
+        </ul>
+        <p>All trees reported by Department staff and the general public, are passed to the Directorate’s elm disease co-ordinator who arranges aerial inspections of the reported trees.</p>
+        <p>Once an infection has been identified, the diseased trees are felled, their stumps peeled of bark and all wood burned either on site or at a nearby location. In recent times the Directorate has overseen the destruction of around 1000 trees since 1992.</p>
+        <p>This may seem a lot of trees but when compared to an estimated elm population of some 200,000 trees, this is a small proportion. We rely on the general public reporting suspect trees quickly and taking a responsible attitude towards the storage and movement of elm&nbsp;timber.</p>
+        <p>Please note that <strong class="hl_o">firewood spreads the disease</strong> and that <strong class="hl_o">transporting elm is illegal</strong>.</p>
+        <h4>How the Disease Spreads</h4>
+        <ul class="leaf_markers marker_top_title">
+            <li>
+                <h5>Elm Bark Beetles</h5>
+                <p>Elm bark beetles vary in size and therefore in their capacity for carrying fungal spores of the disease. The larger the beetle the more fungal spores it can carry from an infected tree to a healthy tree.</p>
+                <p>Two beetle vectors have been identified on the Island to date: <a href="http://www.forestryimages.org/browse/subimages.cfm?sub=66">Scolytus multistriatus</a> (2-3mm) and <a href="http://www.forestryimages.org/browse/subthumb.cfm?sub=4155">Scolytus laevis</a> (4-5mm).</p>
+                <p>The large elm bark beetle Scolytus scolytus (6-7mm) has not yet been positively identified on the Island. By feeding in the twig crotches of a healthy elm, the fungal spores are introduced into the tree causing it to react.</p>
+                <p>A number of defensive compounds are produced but these are insufficient to prevent the blockage of xylem vessels by tyloses which leads to water and mineral starvation and the tree subsequently&nbsp;dying.</p>
+            </li>
+            <li>
+                <h5>Root Grafts</h5>
+                <p>Root grafts are a way for trees to reproduce by fusing with another older tree and are common in hedgerow or woodland situations especially where <a href="http://en.wikipedia.org/wiki/Dutch_Elm">Dutch Elm (Ulmus x hollandica)</a> is&nbsp;found.</p>
+            </li>
+            <li>
+                <h5>Infected Pruning Tools</h5>
+                <p>Pruning tools should always be sterilised before and after working on individual elm trees. This is to stop any infection being transferred from tree to tree.</p>
+            </li>
+        </ul>
+    </div>
+    <div class="grid_4 omega">
+        {% include 'public/parts/get_app.html' %}
+        <h5>Did You Know?</h5>
+        <p class="fact">Elm trees produce a one-seeded fruit, called a samara. It has wings that allow it to be carried by the wind to a new location to root and grow.</p>
+        <p class="fact">In 2006, Samara ranked 351st in a list of the top 1,000 most popular names for baby girls!</p>
+    </div>
+</div>
+{% endblock main_content %}

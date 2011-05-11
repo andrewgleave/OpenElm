@@ -1,0 +1,36 @@
+{% extends 'base.html' %}{% load record_tags %}
+{% block title %}Management {{ block.super }}{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_12 alpha">
+        <ul class="tabs">
+            <li><strong>Unreviewed Reports</strong></li>
+            <li><a href="{% url management_reports %}">All Reports</a></li>
+        </ul>
+        <table cellspacing="0" class="detail_table">
+            <thead>
+                <tr>
+                    <th class="w_5">&nbsp;</th>
+                    <th>Address</th>
+                    <th>Status</th>
+                    <th>Submitted on</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td{% if not record.review_date %} class="new"{% endif %}></td>
+                    <td><a href="{% url management_record_detail record_id=record.get_id %}">{{ record.street_address }}</a></td>
+                    <td>{{ record.status|strip_punctuation|title }}</td>
+                    <td>{{ record.creation_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4"><h5 class="empty">No Records</h5></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock main_content %}

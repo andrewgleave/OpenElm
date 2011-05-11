@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}About OpenElm.org.im {{ block.super }}{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_8 alpha">
+        <h1>About</h1>
+        <p>The Open Elm Project is the result of a collaboration between Island-based <a href="http://www.redrobotstudios.com/">Red Robot Studios</a> and <a href="http://www.gov.im/daff/trees_and_plants/trees/elm/">Isle of Man Department of Environment, Food and Agriculture</a>.</p>
+        <p>The aim of the project is to harness the power of the public to help create a detailed profile of the Island's elm tree population, and to help identify and report trees which may be infected with <a href="http://en.wikipedia.org/wiki/Dutch_elm_disease">Dutch Elm Disease</a>.</p>
+        <p>We have developed this website which enables you to submit the location, health and a photograph of an elm you've spotted, and have built an <a href="http://itunes.apple.com/gb/app/open-elm/id431082576?mt=8">iPhone</a> and <a href="#">Android</a> mobile apps which makes it easy to record trees while you are out and about.</p>
+        <p>All data collected by the project is completely public making it the Island's first project to provide <a href="{% url public_developers %}">public access to the data</a> without restriction, and also the first in using enabling the members of the public to easily collect and contribute valuable information.</p>
+        <p>We'd love to hear any suggestions on how you think we could improve the site, so feel free to drop us an email at <a href="mailto:hello@openelm.org.im">hello@openelm.org.im</a>.</p>
+        <h3>Open Data and Open Source</h3>
+        <p>The Open Elm Project is a completely transparent project: all <a href="{% url public_developers %}">data is fully available</a> and so is the <a href="#">source code for the website</a> and <a href="#">mobile app</a>.</p>
+        <h4>Credits</h4>
+        <p>Thanks to: Andrew Sidebottom, Jimmy Lee and Doug Chalk from Isle of Man Department of Environment, Food and Agriculture for their support and enthusiasm, and also to John Shimmin MHK for being open to the idea when it was first&nbsp;presented.</p>
+        <p>Thanks to all the <a  href="http://www.djangoproject.com/">Django</a>, <a href="http://couchdb.apache.org/">CouchDB</a>, <a href="http://jquery.com/">jQuery</a>, <a href="http://jquerymobile.com/">jQuery Mobile</a>, <a href="http://celeryproject.org/">Celery</a>, <a href="http://www.phonegap.com/">PhoneGap</a>, <a href="http://couchdbkit.org/">CouchDBKit</a> and <a href="http://nginx.org/">nginx</a> contributors for giving us the tools to put this project together on a fully open source&nbsp;stack.</p>
+    </div>
+    <div class="grid_4 omega">
+        <h5>What is Dutch Elm Disease?</h5>
+        <p>Dutch Elm Disease can be transmitted from tree to tree by the elm bark beetle, root grafts and infected pruning tools. An infected elm tree usually exhibits symptoms soon after&nbsp;infection.</p>
+        <p>Because of the speed with which the disease attacks, detecting symptoms as early as possible is essential for treatment. The main symptoms to look out for are:</p>
+        <ul class="no_ml leaf_markers sm_t strong hl_o">
+            <li>Wilting of leaves and young shoots</li>
+            <li>Premature yellowing or discolouration of&nbsp;leaves</li>
+            <li>Retention of dead leaves</li>
+            <li>Rapid development of symptoms</li>
+        </ul>
+    </div>
+</div>
+{% endblock main_content %}

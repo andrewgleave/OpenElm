@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Help record the Isle of Man's Elm Trees {{ block.super }}{% endblock %}
+{% block main_content %}
+<div id="index_cta" class="cta">
+    <div class="info grid_4">
+        <h1>Crowdsourced Dutch Elm Disease monitoring</h1>
+        <h2>Using the community to protect the Isle of Man’s Elm trees</h2>
+    </div>
+    <a href="{% url public_identify %}" class="cta grid_4">Get Started Now &raquo;</a>
+</div>
+<div id="content_wrapper" class="npt clearfix">
+    <div class="grid_8 alpha">
+        <h2>Welcome to the Open Elm Project</h2>
+        <h5 class="intro a">The Open Elm Project is a collaboration between <a href="http://www.redrobotstudios.com/">Red Robot Studios</a> and <a href="http://www.gov.im/daff/trees_and_plants/trees/elm/">Isle of Man Department of Environment, Food and Agriculture</a> to create a detailed, public-powered record of the Islands's elm trees to help monitor and control Dutch Elm Disease.</h5>
+        <p>You don’t have to be a expert to take part &ndash; just follow the simple tips on <a href="{% url public_identify %}">how to identify</a> an elm tree, and you can help make a huge difference to save our Island’s elm&nbsp;population.</p>
+        <p>Between 1968 and 1988 England lost <strong class="hl_g">75%</strong> of its elms, and even though Dutch Elm Disease has reached the Isle of Man, effective control has meant that we have lost less than 1% of our elms. However, we need your help to ensure it stays under control.</p>
+        <h4>What you can do to help:</h4>
+        <ol class="leaf_markers">
+            <li>Learn how to spot an elm <em>(see <a href="{% url public_identify %}">our identification tips</a>)</em></li>
+            <li>Use the app or the <a href="{% url public_submit_report %}">report form</a> record any elms you see</li>
+            <li>If you think an elm is infected, report it as quickly as possible</li>
+        </ol>
+        <p>Your reports can really help stop Dutch Elm disease spreading on our beautiful Island.</p>
+        <a href="{% url public_identify %}" class="alpha cta grid_6">Ok, let's get started! &raquo;</a>
+    </div>
+    <div class="grid_4 omega">
+        {% include 'public/parts/contributors.html' %}
+        {% include 'public/parts/get_app.html' %}
+    </div>
+</div>
+{% endblock main_content %}

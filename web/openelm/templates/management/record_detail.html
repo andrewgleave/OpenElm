@@ -1,0 +1,72 @@
+{% extends 'base.html' %}{% load record_tags %}
+{% block title %}Record Details {{ block.super }}{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_12 alpha">
+        <h2>Record Details</h2>
+        <div id="record_detail_wrap" class="grid_8 alpha">
+            <div class="content_map_canvas"></div>
+            <dl class="detail_list">
+                <dt>Submitted by:</dt>
+                <dd>{{ record.username }}</dd>
+                <dt>Submitted on:</dt>
+                <dd>{{ record.creation_date }}</dd>
+                <dt>Status:</dt>
+                <dd>{{ record.status|strip_punctuation|title }}</dd>
+                <dt>Address:</dt>
+                <dd>{{ record.street_address }}</dd>
+                {% if record.notes %}
+                <dt>Notes:</dt>
+                <dd>{{ record.notes|linebreaks }}</dd>
+                {% endif %}
+                <dt>Photo:</dt>
+                <dd><a href="{{ record.photo_url }}" target="_blank"><img src="{{ record.thumbnail_url }}" width="600"></a></dd>
+                {% if record.review_date %}
+                <dt>Reviewed on:</dt>
+                <dd>{{ record.review_date }}</dd>
+                <dt>Reviewed by:</dt>
+                <dd>{{ record.reviewed_by }}</dd>
+                {% if record.review_notes %}
+                <dt>Review notes:</dt>
+                <dd>{{ record.review_notes|linebreaks }}</dd>
+                {% endif %}
+                {% endif %}
+            </dl>
+            <form class="grid_8 generic_form" method="post" action="{% url management_edit_record record_id=record.get_id %}">
+                <div class="field grid_7 w_578 omega">
+                    <input class="submit delete" id="id_delete" type="submit" name="delete" value="Delete">
+                    <a class="mock_button" href="{% url management_edit_record record_id=record.get_id %}">Edit</a>
+                    {% if not record.review_date %}
+                    <input class="submit" id="id_approve" type="submit" name="approve" value="Approve">
+                    {% endif %}
+                    {% csrf_token %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}
+{% block end_body_scripts %}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var default_location = new google.maps.LatLng({{ record.geometry.coordinates.0 }}, {{ record.geometry.coordinates.1 }});
+        var info_window = new google.maps.InfoWindow();
+        var map_options = {
+            zoom: 17,
+            center: default_location,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        }
+        var map = new google.maps.Map($('div.content_map_canvas')[0], map_options);
+        var marker = new google.maps.Marker({
+            map: map,
+            draggable: false,
+            animation: google.maps.Animation.DROP,
+            position: default_location
+        });
+        google.maps.event.addListener(marker, 'click', function(location) {
+            info_window.open(map, marker);
+        });
+    });
+</script>
+{% endblock %}

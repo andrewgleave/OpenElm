@@ -1,0 +1,100 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>{% block title %}: Open Elm Project{% endblock title %}</title>
+  <link rel="shortcut icon" href="{% firstof VERSIONED_MEDIA_URL "/media/" %}images/fav.png">
+  <link rel="stylesheet" href="{% firstof VERSIONED_MEDIA_URL "/media/" %}css/style.css">
+  <script src="{% firstof VERSIONED_MEDIA_URL "/media/" %}js/libs/modernizr-1.7.min.js"></script>
+  {% block extra_head %}{% endblock extra_head %}
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <div id="management_banner">{% block banner_content %}<a class="so" href="{% url accounts_logout %}">Sign out</a>{% endblock %}</div>
+    {% endif %}
+    <div id="container" class="container_12">
+        <header id="page_header">
+            <div id="header_content">
+            {% block page_header %}
+                <a id="logo" class="png_bg" href="/">Open Elm Project</a>
+                <nav id="header_nav" class="clearfix">
+                    {% block header_nav %}
+                    <ul id="main_nav" class="grid_12 alpha">
+                        <li{% if current_page == 'home' %} class="current"{% endif %}><a href="{% url public_index %}">Home</a></li>
+                        <li{% if current_page == 'map' %} class="current"{% endif %}><a href="{% url public_map %}">Report Map</a></li>
+                        <li{% if current_page == 'identify' %} class="current"{% endif %}><a href="{% url public_identify %}">Identifying an Elm</a></li>
+                        <li{% if current_page == 'about' %} class="current"{% endif %}><a href="{% url public_about %}">About</a></li>
+                        <li{% if current_page == 'developers' %} class="current"{% endif %}><a href="{% url public_developers %}">Developers</a></li>
+                        {% if user.is_authenticated %}
+                        <li{% if current_page == 'management' %} class="current"{% endif %}><a href="{% url management_index %}">Management</a></li>
+                        {% endif %}
+                    </ul>
+                    {% if not user.is_authenticated %}
+                    <a id="submit_report_bt" class="png_bg" href="{% url public_submit_report %}">Submit your report and help us monitor the elm population</a>
+                    {% endif %}
+                    {% endblock header_nav %}
+                </nav>
+                {% endblock page_header %}
+            </div>
+        </header>
+        <div id="main" role="main">
+            <div id="main_content">
+                {% block main_content %}{% endblock main_content %}
+            </div>
+        </div>
+        <footer id="page_footer" class="clearfix">
+            <div id="footer_highlight"></div>
+            <div id="footer_content">
+                {% block footer_content %}
+                <div class="grid_4 alpha">
+                    <h4>About</h4>
+                    <p>The Open Elm Project is a public crowdsourcing project between <a href="http://www.redrobotstudios.com/">Red Robot Studios</a> and the <a href="http://www.gov.im/daff/">Isle of Man Department of Environment, Food and Agriculture</a> to create a detailed profile of the Island's elm population and help monitor and prevent the spread of Dutch Elm Disease.</p>
+                    <a href="http://www.redrobotstudios.com/" class="grid_2 alpha"><img class="png_bg" src="{% firstof VERSIONED_MEDIA_URL "/media/" %}images/rrs_logo.png" width="140" /></a>
+                    <a href="http://www.gov.im/daff/" class="grid_2 omega"><img class="png_bg" src="{% firstof VERSIONED_MEDIA_URL "/media/" %}images/gov_logo.png" width="140" /></a>
+                </div>
+                <div class="grid_4">
+                    <h4>Contributing</h4>
+                    <p>The Island currently has a healthy elm population of ~200,000 and you can help keep it healthy by recording any elm trees you see.</p>
+                    <p>There is little data on the current spread of Dutch Elm Disease so your reports are valuable and will help prevent the the disease spreading on the&nbsp;Island.</p>
+                    <p>This is an open project so if you have any suggestions as to how we can improve the site, drop us an email at <a href="mailto:hello@openelm.org.im">hello@openelm.org.im</a>.</p>
+                    
+                </div>
+                <div class="grid_4 omega">
+                    <h4>Getting Started</h4>
+                    <p>Getting started is easy &ndash; just read our identification tips on how to spot an elm tree and look for signs of disease, then use the app or this site to <a href="{% url public_submit_report %}">submit your record</a>. Easy!</p>
+                    <p><a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.openelm.org.im/" data-text="I'm supporting the Open Elm Project!" data-count="vertical" data-via="openelmproject">Tweet</a></p>
+                    <p class="nmb"><iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.openelm.org.im%2F&amp;layout=standard&amp;show_faces=true&amp;width=250&amp;action=like&amp;font=lucida+grande&amp;colorscheme=light&amp;height=80" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:80px;" allowTransparency="true"></iframe></p>
+                </div>
+                {% endblock footer_content %}
+                <div class="clear"></div>
+                <nav id="footer_nav" class="grid_5 alpha">
+                    <ul id="footer_quick_nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="{% url public_map %}">Report Map</a></li>
+                        <li><a href="{% url public_identify %}">Identifying Elms</a></li>
+                        <li><a href="{% url public_about %}">About</a></li>
+                        <li><a href="{% url public_developers %}">Developers</a></li>
+                        <li><a href="{% url public_terms %}">Terms of Use</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+    </div> 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="{% firstof VERSIONED_MEDIA_URL "/media/" %}js/libs/jquery-1.5.2.min.js">\x3C/script>')</script>
+  <!--[if lt IE 7 ]><script src="{% firstof VERSIONED_MEDIA_URL "/media/" %}js/libs/dd_belatedpng.js"></script><script>DD_belatedPNG.fix('.png_bg');</script><![endif]-->
+  <script>
+    var _gaq=[['_setAccount','UA-5903141-8'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+  <script src="{% firstof VERSIONED_MEDIA_URL "/media/" %}js/base.js"></script>
+  <script src="http://platform.twitter.com/widgets.js"></script>
+  {% block end_body_scripts %}{% endblock %}
+</body>
+</html>

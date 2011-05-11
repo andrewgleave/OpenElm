@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Editing Record {{ block.super }}{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_12 alpha">
+        <h2>Edit Record</h2>
+        <form class="grid_8 generic_form rounded_12" method="post" enctype="multipart/form-data" action=".">
+            <fieldset class="generic">
+                <legend class="step">Record Location</legend>
+                <div class="field grid_7 w_578 clearfix">
+                    <div class="content_map_canvas"></div>
+                </div>
+                <div class="field grid_7 w_578">
+                    {{ form.street_address.label_tag }}{{ form.street_address }}{{ form.street_address.errors }}
+                </div>
+            </fieldset>
+            <fieldset class="generic">
+                <legend class="step">Record Details</legend>
+                <div class="field grid_4">
+                    {{ form.username.label_tag }}{{ form.username }}{{ form.username.errors }}
+                </div>
+                <div class="field grid_7 w_578">
+                    {{ form.notes.label_tag }}{{ form.notes }}{{ form.notes.errors }}
+                </div>
+            </fieldset>
+            <fieldset class="generic">
+                <legend class="step">Review Details</legend>
+                <div class="field grid_7 w_578">
+                    {{ form.review_notes.label_tag }}{{ form.review_notes }}{{ form.review_notes.errors }}
+                </div>
+                <div class="field grid_4">
+                    {{ form.status.label_tag }}{{ form.status }}{{ form.status.errors }}
+                </div>
+                <div class="field grid_7 w_578 omega">
+                    {{ form.location_lat }}
+                    {{ form.location_lng }}
+                    {{ form.extent }}
+                    <a class="back_nav cancel mock_button" href="javascript:void(0);">Cancel</a>
+                    <input class="submit" type="submit" value="Save">
+                    <input class="submit flr delete" id="id_delete" type="submit" name="delete" value="Delete">
+                    {% csrf_token %}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock main_content %}
+{% block end_body_scripts %}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#id_street_address').removeAttr('disabled');
+        var default_location = new google.maps.LatLng({{ form.instance.geometry.coordinates.0 }}, {{ form.instance.geometry.coordinates.1 }});
+        var info_window = new google.maps.InfoWindow();
+        var map_options = {
+            zoom: 17,
+            center: default_location,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        }
+        var map = new google.maps.Map($('div.content_map_canvas')[0], map_options);
+        var marker = new google.maps.Marker({
+            map: map,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: default_location
+        });
+        google.maps.event.addListener(marker, 'dragend', function(location) {
+            var ll = location.latLng;
+            $('#id_location_lat').val(ll.lat());
+            $('#id_location_lng').val(ll.lng());
+            marker.setPosition(ll);
+            new google.maps.Geocoder().geocode({'latLng': ll}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if(results[0]) {
+                        location_address = results
+                        info_window.setContent(location_address[0].formatted_address);
+                        $('#id_street_address').val(location_address[0].formatted_address);
+                        google.maps.event.addListener(marker, 'click', function(location) {
+                            info_window.open(map, marker);
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

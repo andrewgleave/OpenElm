@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Developer Resources and API Details {{ block.super }}{% endblock %}
+{% block main_content %}
+<div id="content_wrapper" class="clearfix">
+    <div class="grid_8 alpha">
+        <h1>Developer Resources</h1>
+        <h3>Open Source</h3>
+        <p>This project is the first of its kind for the Isle of Man, and we've released the source code for both the website and mobile app under the GPL v3 license.</p>
+        <p>You can <a href="https://github.com/andrewgleave/OpenElm">get the source</a> from GitHub.</p>
+        <p>If you'd like to contribute patches or add additional functionality to either the web or mobile app, just fork the project on GitHub and send us a pull request and we can merge the changes&nbsp;back.</p>
+        <h3>Accessing the Database/API</h3>
+        <p>Anything that can talk HTTP can access the database and query its data. <a href="http://couchdb.apache.org/">CouchDB</a> is a document-oriented datastore which operates entirely via HTTP, so accessing and querying data is as simple as making a GET request:</p>
+        <p>Using <a href="http://curl.haxx.se/">cURL</a> you can access the database with:</p>
+        <div class="api_info_box rounded_6">
+            <code>curl -X GET http://redrobot.couchone.com/openelm/</code>
+        </div>
+        <p>You can retrieve all reviewed records <em>(limited to first 5)</em>:</p>
+        <div class="api_info_box rounded_6">
+            <pre><code>curl -X GET http://redrobot.couchone.com/openelm/_design/record/_view/reviewed?limit=5</code></pre>
+        </div>
+        <p>Retrieve a specific record:</p>
+        <div class="api_info_box rounded_6">
+            <pre><code>curl -X GET http://redrobot.couchone.com/openelm/89a860070961ea5ce303c86a04ea7a23</code></pre>
+        </div>
+        <p>Get a record's photo <em>(do this in your browser)</em>:</p>
+        <div class="api_info_box rounded_6">
+            <pre><code><a href="http://photos.openelm.org.im/89a860070961ea5ce303c86a04ea7a23/photo.jpg">http://photos.openelm.org.im/89a860070961ea5ce303c86a04ea7a23/photo.jpg</a>     </code></pre>
+        </div>
+        <p>Perform geospatial queries:</p>
+        <div class="api_info_box rounded_6">
+            <pre><code>curl -X GET http://redrobot.couchone.com/openelm/_design/geo/_spatial/pointsOnly?bbox=54.11064096067739,-4.677257921875025,54.23122316732083,-4.347668078125025</code></pre>
+        </div>
+        <p>You can also view the database using a convenient interface at:
+        <div class="api_info_box rounded_6">
+            <a href="http://redrobot.couchone.com/_utils/database.html?openelm">http://redrobot.couchone.com/_utils/database.html?openelm</a>
+        </div>
+        <p>To create a local copy of the live database:</p>
+        <div class="api_info_box rounded_6">
+            <pre>
+            <code>
+#create a local CouchDB database
+curl -X PUT http://127.0.0.1:5984/openelm
+
+#Replicate the live database to your local machine
+curl -X POST -H "Content-Type: application/json" http://127.0.0.1:5984/_replicate -d '{"source":"http://redrobot.couchone.com/openelm","target":"http://127.0.0.1:5984/openelm"}'</code>
+</pre>
+        </div>
+        <p>If you interested in using the dataset in a project, you should read the <a href="http://guide.couchdb.org/">CouchDB &ndash; Definitive Guide</a> and what CouchDB can offer.</p>
+    </div>
+    <div class="grid_4 omega">
+        <h4>About the Developers</h4>
+        <p><a href="/">Open Elm Project</a> was built and designed by <a href="http://www.redrobotstudios.com/">Red Robot Studios</a>.</p>
+        <p>Red Robot Studios is an Island-based web and mobile software development company who love making great&nbsp;things!</p>
+        <h4>Proudly Built Using:</h4>
+        <ul class="baseline tool_list">
+            <li>
+                <a href="http://www.djangoproject.com/"><img src="{{ MEDIA_URL }}images/django_logo.png"></a>
+            </li>
+            <li>
+                <a href="http://couchdb.apache.org/"><img src="{{ MEDIA_URL }}images/couch_logo.png"></a>
+            </li>
+            <li>
+                <a href="http://jquerymobile.com/"><img src="{{ MEDIA_URL }}images/jqm_logo.png"></a>
+            </li>
+            <li>
+                <a href="http://www.phonegap.com/"><img src="{{ MEDIA_URL }}images/phonegap_logo.png"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock main_content %}
