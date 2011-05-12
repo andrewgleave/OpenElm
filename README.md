@@ -23,8 +23,6 @@ This project uses CouchDB to store records. CouchDB is not a standard RDBMS, and
 
 #Credits
 
-All the contributors to: [Django Project](http://www.djangoproject.com/), [CouchDB](http://couchdb.apache.org/), [CouchOne/Iris Couch](http://www.iriscouch.com/), [Celery](http://celeryproject.org/), [PhoneGap](http://www.phonegap.com/) and [jQuery Mobile](http://jquerymobile.com/).
+All the contributors of: the [Django Project](http://www.djangoproject.com/), [CouchDB](http://couchdb.apache.org/), [CouchOne/Iris Couch](http://www.iriscouch.com/), [CouchDBKit](http://couchdbkit.org/), [Celery](http://celeryproject.org/), [PhoneGap](http://www.phonegap.com/) and [jQuery Mobile](http://jquerymobile.com/).
 
 If you're interested in contributing to the project please get in touch.
-
-andrew@redrobotstudios.com
