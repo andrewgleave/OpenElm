@@ -7,7 +7,7 @@ The [Open Elm Project](http://www.openelm.org.im/) is a public crowdsourcing ini
 
 ##Source
 
-We've distributed the full source for both the site and mobile apps under the GPL v3 (see license.txt). Artwork, images and other media is not covered under this license and cannot be reused for other purposes.
+We've distributed the full source for both the site and mobile apps under the MIT License (see license.txt). Artwork, images and other media is not covered under this license and cannot be reused for other purposes.
 
 ###Site
 The site is a standard Django app which makes use of [Celery](http://celeryproject.org/) to handle distributed tasks, such as handling the media uploads and pushing the media to S3. We've also made use of the excellent [CouchDBKit](http://couchdbkit.org/) project which made it really easy to talk to the CouchDB backend. You should be able to clone the project and run the app if you have the necessary dependencies installed.
@@ -18,7 +18,7 @@ The mobile apps are built using [jQuery Mobile](http://jquerymobile.com/) and wr
 Essentially, these apps are reference implementations, and native versions would give improved performance, features and reliability. Initial funding precluded building native versions for iOS and Android, but anyone interested could build a native version for any platform if they want – the data and API is fully exposed, and you would just need to ask me to create an account so the app could save to the CouchDB database.
 
 ###Database
-This project uses CouchDB to store records. CouchDB is not a standard RDBMS, and is best described as a non-relational document store. The project's database is located at [http://redrobot.couchone.com/_utils/database.html?openelm](http://redrobot.couchone.com/_utils/database.html?openelm). The great thing about CouchDB is that there is no API middleware – the database is the API. I'd encourage you to take a look at CouchDB in detail if you're interested in accessing the data: [CouchDB the definitive guide](http://guide.couchdb.org/) is a good place to start.
+This project uses CouchDB to store records. CouchDB is not a standard RDBMS, and is best described as a non-relational document store. The project's database is located at [http://redrobot.iriscouch.com/_utils/database.html?openelm](http://redrobot.couchone.com/_utils/database.html?openelm). The great thing about CouchDB is that there is no API middleware – the database is the API. I'd encourage you to take a look at CouchDB in detail if you're interested in accessing the data: [CouchDB the definitive guide](http://guide.couchdb.org/) is a good place to start.
 
 
 #Credits
