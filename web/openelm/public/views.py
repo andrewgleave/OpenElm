@@ -1,3 +1,5 @@
+import os
+
 from django.core import urlresolvers
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect, HttpResponse
@@ -32,9 +34,18 @@ def submit_report(request):
             if not record.username:
                 record.username = 'anonymous'
             record.save()
+            
+            filepath = '/tmp/%s.jpg' % (record._id,)
+            if os.path.exists(filepath):
+                os.remove(filepath)
+            #write file to tmp
+            photo = open(filepath, 'wb+')
+            for chunk in form.cleaned_data['photo'].chunks():
+                photo.write(chunk)
+            photo.close()
+            
             #push the upload off to Celery
-            tasks.store_photo_for_record_id.delay(form.cleaned_data['photo'].temporary_file_path(),
-                                                record._id)
+            tasks.store_photo_for_record_id.delay(filepath, record._id)
             return HttpResponseRedirect(urlresolvers.reverse('public_submit_done'))
     else:
         form = AddRecordForm()

@@ -8,7 +8,7 @@ __license__ = "GPL v3.0 http://www.gnu.org/licenses/gpl.html"
 
 
 class Record(Document):
-    username = StringProperty(required=True, default='anonymous')
+    username = StringProperty(required=False, default='anonymous')
     notes = StringProperty(required=False)
     geometry = DictProperty()
     street_address = StringProperty()

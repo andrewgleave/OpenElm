@@ -26,7 +26,7 @@ MANAGERS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'openelm',                      # Or path to database file if using sqlite3.
+        'NAME': '',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -34,8 +34,8 @@ DATABASES = {
     }
 }
 
-COUCHDB_SERVER = 'http://redrobot.couchone.com'
-SECURE_COUCHDB_SERVER = 'https://redrobot.couchone.com'
+COUCHDB_SERVER = 'https://redrobot.iriscouch.com'
+SECURE_COUCHDB_SERVER = 'https://redrobot.iriscouch.com'
 
 S3_BUCKET = 'photos.openelm.org.im'
 
@@ -61,7 +61,7 @@ BROKER_HOST = 'localhost'
 BROKER_PORT = 5672
 BROKER_USER = ''
 BROKER_PASSWORD = ''
-BROKER_VHOST = 'openelm'
+BROKER_VHOST = ''
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

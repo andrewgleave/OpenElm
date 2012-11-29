@@ -1,3 +1,4 @@
+import os
 import datetime
 import cStringIO
 import Image
@@ -74,6 +75,7 @@ def store_photo_for_record_id(filepath, record_id):
     record = get_record_by_id(record_id)
     photo = open(filepath, 'rb')
     process_photo(photo, record)
+    os.remove(filepath)
 
 
 @task()
