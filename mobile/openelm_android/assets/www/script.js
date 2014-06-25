@@ -484,21 +484,37 @@ newUUID:function(b){if(b===undefined)b=1;t.length||k({url:this.urlPrefix+"/_uuid
 var app = (function($) {
     
     var credentials = {name: '', password: ''};
-    $.couch.authUrlPrefix = 'https://' + credentials.name + ':' + credentials.password + '@redrobot.couchone.com';
-    $.couch.urlPrefix = 'https://redrobot.couchone.com';
+    $.couch.urlPrefix = 'https://redrobot.iriscouch.com';
     $db = $.couch.db("openelm");
-    
+    var review_zones = {
+        'iom': [[54.4337, -4.8272], [54.0307, -4.2791]],
+        'se': [[51.102567, -0.548144], [50.7307, 0.781377]]
+    };
     var default_location = {latitude: 54.23032, longitude: -4.5401};
     var current_location = default_location;
     var is_saving = false;
     var nearby_watch;
     var add_record_watch;
     
+    function get_review_zone_for_location(location) {
+        for (var k in review_zones) {
+            if (review_zones.hasOwnProperty(k)) {
+                var a = review_zones[k][0];
+                var b = review_zones[k][1];
+                if(location.latitude <= a[0] && location.latitude >= b[0] 
+                    && location.longitude >= a[1] && location.longitude <= b[1]) {
+                    return k;
+                }
+            }
+        }
+        return null;
+    }
+    
     function load_records_for_map_bounds(map, markers) {
         var bounds = map.getBounds();
         var ne = bounds.getNorthEast();
         var sw = bounds.getSouthWest();
-        $.getJSON('http://redrobot.couchone.com/openelm/_design/geo/_spatiallist/geojson/pointsFullReviewed?bbox='
+        $.getJSON('http://redrobot.iriscouch.com/openelm/_design/geo/_spatiallist/geojson/pointsFullReviewed?bbox='
         + sw.lat() + ',' + sw.lng() + ',' + ne.lat() + ',' + ne.lng() + '&callback=?',
         {},
         function(resp) {
@@ -698,6 +714,12 @@ var app = (function($) {
                 is_saving = false;
                 return false;
             }
+            var review_zone = get_review_zone_for_location(current_location);
+            if(review_zone === null) {
+                navigator.notification.alert("This location is outside of the monitoring zones supported by this project.", $.noop, "Outside Reporting Zone");
+                is_saving = false;
+                return false;
+            }
             if($('#id_new_record_health').val() === 'choose') {
                 navigator.notification.alert("Please select the health of the tree", $.noop, "Error");
                 is_saving = false;
@@ -727,7 +749,7 @@ var app = (function($) {
                 var platform = window.device.platform.toLowerCase();
                 if(platform === 'iphone') {
                     window.plugins.CouchDBAttachmentUploader.upload(photo_uri,
-                        $.couch.authUrlPrefix + '/openelm',
+                        $.couch.urlPrefix + '/openelm',
                         doc.id,
                         doc.rev,
                         success,
@@ -737,7 +759,7 @@ var app = (function($) {
                         attachmentName: 'photo.jpg'});
                 }
                 else if(platform === 'android') {
-                    var path = $.couch.authUrlPrefix + '/openelm/' + doc.id + '/photo.jpg?rev=' + doc.rev;
+                    var path = $.couch.urlPrefix + '/openelm/' + doc.id + '/photo.jpg?rev=' + doc.rev;
                     window.plugins.RawFileTransfer.upload(photo_uri, path, 'image/jpeg', 'PUT', success, fail);
                 }
                 else {
@@ -771,7 +793,9 @@ var app = (function($) {
                              is_saving = false;
                              $.mobile.pageLoading(true);
                              navigator.notification.alert(reason, $.noop, error);
-                         }
+                         },
+                         username: credentials.name,
+                         password: credentials.password
                     });
                 },
                 error: function(status, error, reason) {
