@@ -8,7 +8,9 @@ from django.template import RequestContext
 
 from record.documents import Record
 from record.forms import AddRecordForm
-from record.utils import get_couch_document_or_404, get_photo_url_for_record
+from record.utils import (get_couch_document_or_404,
+                            get_photo_url_for_record,
+                            get_review_zone_for_coordinates)
 from record import tasks
 
 
@@ -25,16 +27,17 @@ def submit_report(request):
             #remove as we're adding lat/lng as geometry
             del record.location_lat
             del record.location_lng
+            lat = float(form.cleaned_data['location_lat'])
+            lon = float(form.cleaned_data['location_lng'])
             record.geometry = {
                 'type': 'Point',
-                'coordinates': [float(form.cleaned_data['location_lat']),
-                                float(form.cleaned_data['location_lng'])]
+                'coordinates': [lat, lon]
             }
+            record.review_zone = get_review_zone_for_coordinates(lat, lon)
             record.source = 'web'
             if not record.username:
                 record.username = 'anonymous'
             record.save()
-            
             filepath = '/tmp/%s.jpg' % (record._id,)
             if os.path.exists(filepath):
                 os.remove(filepath)
@@ -43,7 +46,6 @@ def submit_report(request):
             for chunk in form.cleaned_data['photo'].chunks():
                 photo.write(chunk)
             photo.close()
-            
             #push the upload off to Celery
             tasks.store_photo_for_record_id.delay(filepath, record._id)
             return HttpResponseRedirect(urlresolvers.reverse('public_submit_done'))

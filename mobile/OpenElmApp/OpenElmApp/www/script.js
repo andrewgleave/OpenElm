@@ -235,12 +235,29 @@ var app = (function($) {
     var credentials = {name: '', password: ''};
     $.couch.urlPrefix = 'https://redrobot.iriscouch.com';
     $db = $.couch.db("openelm");
-    
+    var review_zones = {
+        'iom': [[54.4337, -4.8272], [54.0307, -4.2791]],
+        'se': [[51.102567, -0.548144], [50.7307, 0.781377]]
+    };
     var default_location = {latitude: 54.23032, longitude: -4.5401};
     var current_location = default_location;
     var is_saving = false;
     var nearby_watch;
     var add_record_watch;
+    
+    function get_review_zone_for_location(location) {
+        for (var k in review_zones) {
+            if (review_zones.hasOwnProperty(k)) {
+                var a = review_zones[k][0];
+                var b = review_zones[k][1];
+                if(location.latitude <= a[0] && location.latitude >= b[0] 
+                    && location.longitude >= a[1] && location.longitude <= b[1]) {
+                    return k;
+                }
+            }
+        }
+        return null;
+    }
     
     function load_records_for_map_bounds(map, markers) {
         var bounds = map.getBounds();
@@ -447,6 +464,12 @@ var app = (function($) {
                 is_saving = false;
                 return false;
             }
+            var review_zone = get_review_zone_for_location(current_location);
+            if(review_zone === null) {
+                navigator.notification.alert("This location is outside of the monitoring zones supported by this project.", $.noop, "Outside Reporting Zone");
+                is_saving = false;
+                return false;
+            }
             if(geocoded_address == null) {
                 navigator.notification.alert("Geocoding service failed. Please wait for the device to locate your position, or try dragging the map marker to indicate your location.", null, "GPS Failure");
                 is_saving = false;
@@ -461,6 +484,7 @@ var app = (function($) {
             var doc = {
                 doc_type: 'Record',
                 geometry: {type:'Point', 'coordinates': [current_location.latitude, current_location.longitude]},
+                review_zone: review_zone,
                 street_address: geocoded_address[0].formatted_address,
                 notes: $('#id_new_record_notes').val(),
                 status: $('#id_new_record_health').val(),

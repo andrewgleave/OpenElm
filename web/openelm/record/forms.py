@@ -4,6 +4,7 @@ from django import forms
 from couchdbkit.ext.django.forms  import DocumentForm
 
 from record.documents import Record
+from record.utils import get_review_zone_for_coordinates
 
 
 __copyright__ = "Copyright 2011 Red Robot Studios Ltd."
@@ -61,6 +62,9 @@ class AddRecordForm(DocumentForm):
         if not location_lat or not location_lng:
             raise forms.ValidationError(u'Please use the map to choose the location ' \
                                         'and edit the street address if necessary')
+        review_zone = get_review_zone_for_coordinates(location_lat, location_lng)
+        if review_zone is None:
+            raise forms.ValidationError(u'This location is outside of the areas supported by this project')
         return self.cleaned_data
 
 

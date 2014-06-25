@@ -17,6 +17,7 @@ class Record(Document):
     review_date = DateTimeProperty()
     review_notes = StringProperty(required=False)
     reviewed_by = StringProperty()
+    review_zone = StringProperty()
     creation_date = DateTimeProperty(default=datetime.datetime.utcnow)
 
     
