@@ -2,7 +2,7 @@
 //  CouchDBAttachmentUploader.h
 //
 //  Created by Andrew on 19/02/2011.
-//  Copyright 2011 Red Robot Studios Ltd. All rights reserved.
+//  Copyright 2011-2014 Red Robot Studios Ltd. All rights reserved.
 //
 
 

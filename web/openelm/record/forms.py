@@ -7,8 +7,8 @@ from record.documents import Record
 from record.utils import get_review_zone_for_coordinates
 
 
-__copyright__ = "Copyright 2011 Red Robot Studios Ltd."
-__license__ = "GPL v3.0 http://www.gnu.org/licenses/gpl.html"
+__copyright__ = "Copyright 2011-2014 Red Robot Studios Ltd."
+__license__ = "MIT http://opensource.org/licenses/MIT"
 
 
 class AddRecordForm(DocumentForm):

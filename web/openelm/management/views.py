@@ -2,7 +2,7 @@ import datetime
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.core import urlresolvers
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
@@ -13,8 +13,8 @@ from record.utils import get_couch_document_or_404, get_photo_url_for_record
 from record import tasks
 
 
-__copyright__ = "Copyright 2011 Red Robot Studios Ltd."
-__license__ = "GPL v3.0 http://www.gnu.org/licenses/gpl.html"
+__copyright__ = "Copyright 2011-2014 Red Robot Studios Ltd."
+__license__ = "MIT http://opensource.org/licenses/MIT"
 
 
 RECORDS_PER_PAGE = 20
@@ -23,7 +23,8 @@ RECORDS_PER_PAGE = 20
 @login_required
 @cache_control(private=True)
 def index(request):
-    records = Record.view('record/unreviewed', descending=True)
+    profile = request.user.get_profile()
+    records = Record.view('record/unreviewed', startkey=profile.review_zone)
     return render_to_response('management/index.html',
                 {'records': records,
                 'current_page': 'management'},
@@ -33,8 +34,12 @@ def index(request):
 @cache_control(private=True)
 def records(request):
     next = ''
-    kwargs = {'descending': True,
-            'limit': RECORDS_PER_PAGE + 1}
+    profile = request.user.get_profile()
+    kwargs = {
+        'descending': True,
+        'limit': RECORDS_PER_PAGE + 1,
+        'startkey': profile.review_zone
+    }
     if 'n' in request.GET:
         kwargs['startkey'] = request.GET['n']
     records = list(Record.get_db().view('record/all', **kwargs))
@@ -53,7 +58,7 @@ def records(request):
 @login_required
 @cache_control(private=True)
 def record_detail(request, record_id):
-    record = get_couch_document_or_404(Record, record_id)
+    record = get_record(request.user, record_id)
     photo_url = get_photo_url_for_record(record)
     return render_to_response('management/record_detail.html',
                 {'record': record,
@@ -64,7 +69,7 @@ def record_detail(request, record_id):
 @login_required
 @cache_control(private=True)
 def edit_record(request, record_id):
-    record = get_couch_document_or_404(Record, record_id)
+    record = get_record(request.user, record_id)
     photo_url = get_photo_url_for_record(record)
     if request.method == 'POST':
         if 'delete' in request.POST:
@@ -110,3 +115,10 @@ def convert_datetime_string(value):
         value = value[0:19] # remove timezone
         return datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S')
     return ''
+
+def get_record(user, record_id):
+    profile = user.get_profile()
+    record = get_couch_document_or_404(Record, record_id)
+    if record.review_zone != profile.review_zone:
+        raise Http404(u'Record not found')
+    return record

@@ -6,8 +6,8 @@ from django.http import Http404
 from couchdbkit import ResourceNotFound
 
 
-__copyright__ = "Copyright 2011 Red Robot Studios Ltd."
-__license__ = "GPL v3.0 http://www.gnu.org/licenses/gpl.html"
+__copyright__ = "Copyright 2011-2014 Red Robot Studios Ltd."
+__license__ = "MIT http://opensource.org/licenses/MIT"
 
 
 REVIEW_ZONE_MAP = {
@@ -20,7 +20,7 @@ def get_couch_document_or_404(klass, *args, **kwargs):
     try:
         return klass.get(*args, **kwargs)
     except ResourceNotFound:
-        raise Http404(u'Document not found')
+        raise Http404(u'Record not found')
 
 def get_photo_url_for_record(record):
     if record._doc.get('_attachments'):

@@ -14,8 +14,8 @@ from record.utils import (get_couch_document_or_404,
 from record import tasks
 
 
-__copyright__ = "Copyright 2011 Red Robot Studios Ltd."
-__license__ = "GPL v3.0 http://www.gnu.org/licenses/gpl.html"
+__copyright__ = "Copyright 2011-2014 Red Robot Studios Ltd."
+__license__ = "MIT http://opensource.org/licenses/MIT"
 
 
 def submit_report(request):
