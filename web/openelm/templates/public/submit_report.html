@@ -61,44 +61,56 @@
         {% if not form.errors %}$('#record_form_details').hide();{% else %}$('#id_street_address').removeAttr('disabled');{% endif %}
         {% if not form.location_lat.value and not form.location_lng.value %}
         var default_location = new google.maps.LatLng(54.170976, -4.512463);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                    default_location = google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    loadMap();
+            });
+        }
+        else {
+            loadMap();
+        }
         {% else %}
         var default_location = new google.maps.LatLng({{ form.location_lat.value }}, {{ form.location_lng.value }});
+        loadMap();
         {% endif %}
-        var info_window = new google.maps.InfoWindow();
-        var map_options = {
-            zoom: 13,
-            center: default_location,
-            mapTypeId: google.maps.MapTypeId.HYBRID
-        }
-        var map = new google.maps.Map($('div.content_map_canvas')[0], map_options);
-        var marker = new google.maps.Marker({
-            map: map,
-            draggable: true,
-            animation: google.maps.Animation.DROP,
-            position: default_location
-        });
-        google.maps.event.addListener(marker, 'dragend', function(location) {
-            var ll = location.latLng;
-            $('#id_location_lat').val(ll.lat());
-            $('#id_location_lng').val(ll.lng());
-            marker.setPosition(ll);
-            new google.maps.Geocoder().geocode({'latLng': ll}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if(results[0]) {
-                        location_address = results
-                        info_window.setContent(location_address[0].formatted_address);
-                        $('#id_street_address').val(location_address[0].formatted_address);
-                        google.maps.event.addListener(marker, 'click', function(location) {
-                            info_window.open(map, marker);
-                        });
-                    }
-                }
-                if(!$('#record_form_details').is(":visible")) {
-                    $('#id_street_address').removeAttr('disabled');
-                    $('#record_form_details').slideDown('fast');
-                }
+        function loadMap() {
+            var info_window = new google.maps.InfoWindow();
+            var map_options = {
+                zoom: 13,
+                center: default_location,
+                mapTypeId: google.maps.MapTypeId.HYBRID
+            }
+            var map = new google.maps.Map($('div.content_map_canvas')[0], map_options);
+            var marker = new google.maps.Marker({
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                position: default_location
             });
-        });
+            google.maps.event.addListener(marker, 'dragend', function(location) {
+                var ll = location.latLng;
+                $('#id_location_lat').val(ll.lat());
+                $('#id_location_lng').val(ll.lng());
+                marker.setPosition(ll);
+                new google.maps.Geocoder().geocode({'latLng': ll}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if(results[0]) {
+                            location_address = results
+                            info_window.setContent(location_address[0].formatted_address);
+                            $('#id_street_address').val(location_address[0].formatted_address);
+                            google.maps.event.addListener(marker, 'click', function(location) {
+                                info_window.open(map, marker);
+                            });
+                        }
+                    }
+                    if(!$('#record_form_details').is(":visible")) {
+                        $('#id_street_address').removeAttr('disabled');
+                        $('#record_form_details').slideDown('fast');
+                    }
+                });
+            });
+        }
     });
 </script>
 {% endblock %}
