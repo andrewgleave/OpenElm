@@ -20,7 +20,6 @@ ADMINS = (
 
 MANAGERS = (
     ('Andrew Gleave', 'andrew@redrobotstudios.com'),
-    ('DEFA', 'openelm@gov.im'),
 )
 
 DATABASES = {

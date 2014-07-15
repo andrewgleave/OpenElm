@@ -6,7 +6,7 @@ import email
 import time
 
 from django.conf import settings
-from django.core.mail import mail_managers
+from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 from celery.decorators import task
@@ -15,6 +15,7 @@ from couchdbkit import Server, Consumer
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 
+from accounts.models import UserProfile
 from core.models import SyncSequenceCache
 from core.utils import crop_image_to_dimensions
 from record.documents import Record
@@ -40,6 +41,9 @@ def create_thumbnail(photo):
     output = cStringIO.StringIO()
     image.save(output, 'jpeg')
     return output
+
+def get_user_for_review_zone(zone):
+    
 
 
 def process_photo(photo, record):
@@ -98,8 +102,12 @@ def delete_photos_for_record_id(record_id):
 
 @task()
 def send_new_record_email(record_id):
-    body = render_to_string('management/email/new_record.txt', {'record_id': record_id})
-    mail_managers('New Record Submitted', body)
+    record = get_record_by_id(record_id)
+    reviewer = UserProfile.objects.get_user_for_review_zone(record.review_zone)
+    if reviewer is not None:
+        recipents = ([x[1] for x in settings.MANAGERS] + [reviewer.email])
+        body = render_to_string('management/email/new_record.txt', {'record_id': record_id})
+        send_mail('New Record Submitted', body, settings.DEFAULT_FROM_EMAIL, recipents)
 
 
 @task
