@@ -1,27 +1,27 @@
-#Open Elm Project
+# Open Elm Project
 [http://www.openelm.org.im/](http://www.openelm.org.im/)
 
 *Andrew Gleave, [Red Robot Studios Ltd](http://www.redrobotstudios.com/)*
 
 The [Open Elm Project](http://www.openelm.org.im/) is a public crowdsourcing initiative to collect data on the Elm tree population of the Isle of Man and help track and tackle increasing outbreaks of Dutch Elm Disease. The Island is one of the few places left in the UK which have a healthy population (unlike England which lost 23 million trees between 1960 and 1988), and the with the public's involvement, we hope to keep it that way.
 
-##Source
+## Source
 
-We've distributed the full source for both the site and mobile apps under the MIT License (see license.txt). Artwork, images and other media is not covered under this license and cannot be reused for other purposes.
+I've distributed the full source for both the site and mobile apps under the MIT License (see license.txt). Artwork, images and other media is not covered under this license and cannot be reused for other purposes.
 
-###Site
+### Site
 The site is a standard Django app which makes use of [Celery](http://celeryproject.org/) to handle distributed tasks, such as handling the media uploads and pushing the media to S3. We've also made use of the excellent [CouchDBKit](http://couchdbkit.org/) project which made it really easy to talk to the CouchDB backend. You should be able to clone the project and run the app if you have the necessary dependencies installed.
 
-###Mobile Apps
+### Mobile Apps
 The mobile apps are built using [jQuery Mobile](http://jquerymobile.com/) and wrapped for iOS and Android with [PhoneGap](http://www.phonegap.com/). We chose to build the apps with HTML5 to increase the chance that other developers may deploy the app to other platforms. 
 
 Essentially, these apps are reference implementations, and native versions would give improved performance, features and reliability. Initial funding precluded building native versions for iOS and Android, but anyone interested could build a native version for any platform if they want – the data and API is fully exposed, and you would just need to ask me to create an account so the app could save to the CouchDB database.
 
-###Database
+### Database
 This project uses CouchDB to store records. CouchDB is not a standard RDBMS, and is best described as a non-relational document store. The project's database is located at [http://redrobot.iriscouch.com/_utils/database.html?openelm](http://redrobot.couchone.com/_utils/database.html?openelm). The great thing about CouchDB is that there is no API middleware – the database is the API. I'd encourage you to take a look at CouchDB in detail if you're interested in accessing the data: [CouchDB the definitive guide](http://guide.couchdb.org/) is a good place to start.
 
 
-#Credits
+### Credits
 
 All the contributors of: the [Django Project](http://www.djangoproject.com/), [CouchDB](http://couchdb.apache.org/), [CouchOne/Iris Couch](http://www.iriscouch.com/), [CouchDBKit](http://couchdbkit.org/), [Celery](http://celeryproject.org/), [PhoneGap](http://www.phonegap.com/) and [jQuery Mobile](http://jquerymobile.com/).
 
